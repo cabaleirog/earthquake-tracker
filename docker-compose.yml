@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  webapp:
+    build:
+      context: webapp/.
+      dockerfile: Dockerfile
+    ports:
+      - 4200:4200
+
+  api:
+    build:
+      context: api/.
+      dockerfile: Dockerfile
+    ports:
+      - 3000:80
+  
+  redis:
+    image: redis:latest
+  
+  # nginx:
+  #   build:
+  #     context: nginx/.
+  #     dockerfile: Dockerfile
