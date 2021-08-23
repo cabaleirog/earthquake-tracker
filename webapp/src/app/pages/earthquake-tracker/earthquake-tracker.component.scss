@@ -1,0 +1,38 @@
+.container {
+  background: #3F5F63;
+  width: 100%;
+  min-height: 100vh;
+}
+
+h1 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 63px;
+  color: #FFFFFF;
+  text-align: center;
+  padding-top: 48px;
+}
+
+h2 {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.indicators {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.date-pickers-container {
+  border: 1px dashed #FFFFFF;
+  box-sizing: border-box;
+  margin: 100px 0;
+}

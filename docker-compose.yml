@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 4200:4200
+    volumes:
+      - ./webapp/src:/code/src
 
   api:
     build:
