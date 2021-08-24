@@ -10,13 +10,17 @@ services:
     volumes:
       - ./webapp/src:/code/src
 
-  api:
+  locations-api:
     build:
-      context: api/.
+      context: locations-api-service/.
       dockerfile: Dockerfile
     ports:
-      - 3000:80
-  
+      - 5001:8000
+    volumes:
+      - ./locations-api-service/djangoapi:/code
+    depends_on:
+      - db
+
   redis:
     image: redis:latest
   
@@ -24,3 +28,16 @@ services:
   #   build:
   #     context: nginx/.
   #     dockerfile: Dockerfile
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: demo-mysql-secret-password
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
