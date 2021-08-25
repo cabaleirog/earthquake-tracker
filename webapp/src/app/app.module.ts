@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClosestEarthquakeComponent } from './components/closest-earthquake/closest-earthquake.component';
 import { EarthquakeTrackerComponent } from './pages/earthquake-tracker/earthquake-tracker.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { EarthquakeTrackerComponent } from './pages/earthquake-tracker/earthquak
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
