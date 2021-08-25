@@ -1,0 +1,17 @@
+# Docker swarm secrets
+secrets/
+
+# VSCode
+.vscode
+
+# Idea
+.idea
+
+# System
+.DS_Store
+
+# VIM swap files
+.*.swp
+
+# VIM temp files
+*~
