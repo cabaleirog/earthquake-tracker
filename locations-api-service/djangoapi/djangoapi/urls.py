@@ -18,5 +18,6 @@ from django.urls import path
 from django.conf.urls import include, url
 
 urlpatterns = [
-    url(r'^', include('locations.urls')),
+    url(r'^locations/', include('locations.urls')),
+    url(r'^earthquakes/', include('earthquakes.urls')),
 ]

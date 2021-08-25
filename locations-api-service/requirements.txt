@@ -2,3 +2,4 @@ Django
 djangorestframework
 gunicorn
 mysqlclient
+requests
