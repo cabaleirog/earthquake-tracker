@@ -1,6 +1,17 @@
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { EarthquakeResponse, EarthquakesService } from 'src/app/services/earthquakes.service';
+import { EarthquakesService } from 'src/app/services/earthquakes.service';
+
+interface EarthquakeData {
+  event_id: string;
+  latitude: number;
+  longitude: number;
+  magnitude: number;
+  magnitude_type: string;
+  place: string;
+  time: string;  // UTC ISO Formatted date and time.
+  title: string;
+}
 
 @Component({
   selector: 'app-closest-earthquake',
@@ -8,19 +19,40 @@ import { EarthquakeResponse, EarthquakesService } from 'src/app/services/earthqu
   styleUrls: ['./closest-earthquake.component.scss']
 })
 export class ClosestEarthquakeComponent implements OnInit {
+  @Input('city-identifier') cityIdentifier: string = '';
   @Input('city') city: string = '';
-  @Input('since') sinceDate!: Date;
-  @Input('until') untilDate!: Date;
+  @Input('since') sinceDate!: string;
+  @Input('until') untilDate!: string;
 
-  public data!: EarthquakeResponse;
+  public data?: EarthquakeData;
+
+  public magnitude: number = 0;
 
   constructor(private earthquakeService: EarthquakesService) { }
 
   ngOnInit(): void {
-    this.earthquakeService.getClosest(this.city, this.sinceDate, this.untilDate)
-      .subscribe((resp: EarthquakeResponse) => {
-        this.data = resp;
-      })
+    this.earthquakeService.getClosest(this.cityIdentifier, this.sinceDate, this.untilDate)
+      .subscribe(
+        (resp) => {
+          console.log(resp);
+          if (resp['data']) {
+            this.data = resp['data'];
+          }
+        },
+        (err) => {
+          console.error(err);
+        }
+      )
   }
 
+  get foundOne(): boolean {
+    return (this.data !== undefined && this.data !== null);
+  }
+
+  get asOf(): Date | null {
+    if (this.data === null || this.data === undefined) {
+      return null;
+    }
+    return new Date(this.data.time)
+  }
 }
