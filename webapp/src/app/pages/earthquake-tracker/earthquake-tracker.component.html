@@ -24,9 +24,9 @@
     </form>
   </div>
 
-  <div class="indicators">
-    <app-closest-earthquake city-identifier="los_angeles" city="Los Angeles, CA" since="2021-08-01" until="2021-08-25"></app-closest-earthquake>
-    <app-closest-earthquake city-identifier="san_francisco" city="San Francisco, CA" since="2021-08-01" until="2021-08-25"></app-closest-earthquake>
-    <app-closest-earthquake city-identifier="tokyo" city="Tokyo, Japon" since="2021-08-01" until="2021-08-25"></app-closest-earthquake>
+  <div class="indicators" *ngIf="!loading">
+    <app-closest-earthquake city-identifier="los_angeles" city="Los Angeles, CA" [since]="searchSince" [until]="searchUntil"></app-closest-earthquake>
+    <app-closest-earthquake city-identifier="san_francisco" city="San Francisco, CA" [since]="searchSince" [until]="searchUntil"></app-closest-earthquake>
+    <app-closest-earthquake city-identifier="tokyo" city="Tokyo, Japon" [since]="searchSince" [until]="searchUntil"></app-closest-earthquake>
   </div>
 </div>
