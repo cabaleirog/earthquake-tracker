@@ -47,6 +47,13 @@ h2 {
   &__button {
     display: flex;
     justify-content: center;
+
+    button {
+      svg {
+        fill: white;
+        margin-right: 8px;
+      }
+    }
   }
 
 }
