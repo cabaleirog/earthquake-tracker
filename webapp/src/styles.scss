@@ -5,3 +5,10 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Override of the Angular Material theme
+.mat-form-field {
+  .mat-input-element {
+    color: white;
+  }
+}

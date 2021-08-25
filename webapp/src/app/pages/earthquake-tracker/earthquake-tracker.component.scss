@@ -36,4 +36,23 @@ h2 {
   border: 1px dashed #FFFFFF;
   box-sizing: border-box;
   margin: 100px 0;
+  padding: 40px 80px;
+  width: 720px;
+
+  &__pickers {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+  }
+
+}
+
+.flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
