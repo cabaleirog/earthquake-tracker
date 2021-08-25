@@ -5,7 +5,23 @@
   <h2>Select your dates to see the closest activity</h2>
 
   <div class="date-pickers-container">
-    <button>Empty</button>
+    <form [formGroup]="form">
+      <mat-form-field appearance="standard">
+        <mat-label>Start date</mat-label>
+        <input matInput [matDatepicker]="since" formControlName="since">
+        <mat-datepicker-toggle matSuffix [for]="since"></mat-datepicker-toggle>
+        <mat-datepicker #since></mat-datepicker>
+      </mat-form-field>
+  
+      <mat-form-field appearance="standard">
+        <mat-label>End date</mat-label>
+        <input matInput [matDatepicker]="until" formControlName="until">
+        <mat-datepicker-toggle matSuffix [for]="until"></mat-datepicker-toggle>
+        <mat-datepicker #until></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-raised-button (click)="updateData()" >Update</button>
+    </form>
   </div>
 
   <div class="indicators">
