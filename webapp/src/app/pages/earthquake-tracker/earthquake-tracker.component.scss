@@ -26,10 +26,10 @@ h2 {
 }
 
 .indicators {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 120px;
+  padding: 0 5vw;
 }
 
 .date-pickers-container {
