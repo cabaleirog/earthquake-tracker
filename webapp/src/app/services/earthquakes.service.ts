@@ -1,33 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-export interface EarthquakeResponse {
-  found: boolean;
-  text?: string;
-  magnitude?: number;
-  scale?: string;
-  location?: string;
-  date?: Date;
-}
-
-const dummyResponse: EarthquakeResponse = {
-  found: false,
-  text: 'M 5.7 - South of Africa on June 30',
-  magnitude: 5.7,
-  scale: 'M',
-  location: 'South of Africa',
-  date: new Date(2021, 8, 20),
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class EarthquakesService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getClosest(city: string, since: Date, until: Date): Observable<EarthquakeResponse> {
-    return of(dummyResponse);
+  getClosest(city: string, since: string, until: string): Observable<any> {
+    const params = new HttpParams()
+      .set('location', city)
+      .set('starttime', since)
+      .set('endtime', until);
+    return this.http.get(`/earthquakes`, { params: params });
   }
 
 }
