@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from functools import cache
 
 from rest_framework.response import Response
@@ -20,6 +20,7 @@ def get_closest_earthquake(request):
     location_identifier = request.GET.get('location')
     starttime = datetime.strptime(request.GET.get('starttime'), '%Y-%m-%d')
     endtime = datetime.strptime(request.GET.get('endtime'), '%Y-%m-%d')
+
     location = Location.objects.get(identifier=location_identifier)
     logger.debug(location)
 
@@ -59,11 +60,17 @@ def _get_closest_earthquake(latitude, longitude, start_time, end_time):
         for data in earthquakes_data:
             Earthquake.from_usgs_json_data(data)
 
+    # As end_time is provided at the start of the day, we will force it to
+    # the end of the day by adding a day to it.
+    end_time_midnight = end_time + timedelta(days=1)
+
     # Calculate the closest
     distance_array = []
-    earthquakes = Earthquake.objects.filter(time__range=[start_time, end_time])
+    earthquakes = Earthquake.objects.filter(
+        time__range=[start_time, end_time_midnight])
     for earthquake in earthquakes:
-        d = distance(latitude, earthquake.latitude, longitude, earthquake.longitude)
+        d = distance(
+            latitude, earthquake.latitude, longitude, earthquake.longitude)
         distance_array.append((d, earthquake))
         logger.debug('%.0f -> %s | %s %s', d, earthquake, earthquake.latitude, earthquake.longitude)
 
