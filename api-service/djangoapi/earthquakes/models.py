@@ -1,3 +1,4 @@
+import pytz
 from datetime import datetime
 
 from django.db import models
@@ -28,7 +29,8 @@ class Earthquake(models.Model):
             longitude=data.get('geometry').get('coordinates')[0],
             magnitude=data.get('properties').get('mag'),
             place=data.get('properties').get('place'),
-            time=datetime.fromtimestamp(data.get('properties').get('time') // 1000),
+            time=datetime.fromtimestamp(
+                data.get('properties').get('time') // 1000, pytz.utc),
             magnitude_type=data.get('properties').get('magType'),
             title=data.get('properties').get('title'),
         )
