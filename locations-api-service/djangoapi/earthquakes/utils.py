@@ -92,7 +92,7 @@ def check_missing_dates(start_date, end_date):
     return list(all_dates.difference(seen))
 
 
-def create_capture_ranges(dates, max_gap=30):
+def create_capture_ranges(dates, max_gap=360):
     """Return a list of time ranges.
 
        Each range represents the minimum possible range that covers everything
