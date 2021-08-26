@@ -31,6 +31,15 @@ def get_logger(name, level=logging.DEBUG):
 def build_query_url(start_date, end_date, min_magnitude):
     """
 
+    https://earthquake.usgs.gov/fdsnws/event/1/#parameters
+
+    All times use ISO8601 Date/Time format. Unless a timezone is specified,
+    UTC is assumed. Examples:
+
+    2021-08-26, Implicit UTC timezone, and time at start of the day (00:00:00)
+    2021-08-26T00:20:44, Implicit UTC timezone.
+    2021-08-26T00:20:44+00:00, Explicit timezone.
+
     Args:
         start_date (datetime):
         end_date (datetime):
@@ -40,9 +49,10 @@ def build_query_url(start_date, end_date, min_magnitude):
         str: The url with the relevant query parameters.
 
     """
+    query_end_date = end_date + timedelta(days=1)  # As time starts at 00:00:00
     return (f'https://earthquake.usgs.gov/fdsnws/event/1/query.geojson?'
             f'starttime={start_date.strftime("%Y-%m-%d")}&'
-            f'endtime={end_date.strftime("%Y-%m-%d")}&'
+            f'endtime={query_end_date.strftime("%Y-%m-%d")}&'
             f'minmagnitude={min_magnitude}&orderby=time')
 
 
