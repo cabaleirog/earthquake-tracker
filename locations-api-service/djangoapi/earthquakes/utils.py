@@ -102,7 +102,7 @@ def create_capture_ranges(dates, max_gap=30):
     while i < len(dates):
         start = dates[i]
         for j in range(i, len(dates)):
-            if (dates[j] - dates[i]) > timedelta(days=max_gap):
+            if (dates[j] - dates[i]) >= timedelta(days=max_gap):
                 i = j
                 break
             end = dates[j]
