@@ -6,7 +6,6 @@ services:
     depends_on:
       - api
 
-
   api:
     image: cabaleirog/earthquakes-api:latest
     depends_on:
@@ -30,9 +29,14 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: demo-mysql-secret-password
+    volumes:
+      - mysqldata:/var/lib/mysql
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+
+volumes:
+  mysqldata:
