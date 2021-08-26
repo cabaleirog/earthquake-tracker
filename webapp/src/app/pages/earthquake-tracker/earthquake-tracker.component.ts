@@ -9,25 +9,24 @@ import { LocationsService, Location } from 'src/app/services/locations.service';
 })
 export class EarthquakeTrackerComponent implements OnInit {
 
-  form = new FormGroup({
-    since: new FormControl(''),
-    until: new FormControl(''),
-  })
-
   loading = false;
 
   public searchSince: string;
   public searchUntil: string;
 
-  startDate: Date = new Date();
+  startDate: Date = this.dateWithDelta(new Date(), -7);
   endDate: Date = new Date();
+
+  form = new FormGroup({
+    since: new FormControl(this.startDate.toISOString().substr(0, 10)),
+    until: new FormControl(this.endDate.toISOString().substr(0, 10)),
+  })
 
   locations: Location[] = [];
 
   constructor(private locationsService: LocationsService) {
-    const todayISO = (new Date()).toISOString().substr(0, 10);
-    this.searchSince = todayISO;
-    this.searchUntil = todayISO;
+    this.searchSince = this.startDate.toISOString().substr(0, 10);
+    this.searchUntil = this.endDate.toISOString().substr(0, 10);
   }
 
   ngOnInit(): void {
@@ -48,5 +47,11 @@ export class EarthquakeTrackerComponent implements OnInit {
     setTimeout(() => {
       this.loading = false;
     }, 100);
+  }
+
+  private dateWithDelta(date: Date, delta: number) {
+    const other = new Date(date);
+    other.setDate(other.getDate() + delta);
+    return other;
   }
 }
