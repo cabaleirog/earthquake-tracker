@@ -1,7 +1,7 @@
 import pytz
 from datetime import datetime
 
-from django.db import models
+from django.db import models, IntegrityError
 
 
 class Earthquake(models.Model):
@@ -34,7 +34,11 @@ class Earthquake(models.Model):
             magnitude_type=data.get('properties').get('magType'),
             title=data.get('properties').get('title'),
         )
-        earthquake.save()
+        try:
+            earthquake.save()
+        except IntegrityError:
+            # FIXME: The record seems to have been saved while creating this.
+            earthquake = cls.objects.filter(event_id=data.get('id')).first()
         return earthquake
 
     def __str__(self):
