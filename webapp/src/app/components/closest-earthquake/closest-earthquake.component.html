@@ -3,7 +3,7 @@
     <span>{{ city }}</span>
   </div>
   
-  <div class="circle" [ngClass]="{'circle--red': foundOne == true}">
+  <div class="circle" [ngClass]="{'circle--red': foundOne == true, 'circle--gray': loading == true}">
     <div class="circle__content">
 
       <div *ngIf="!foundOne">
@@ -22,11 +22,15 @@
   
   <div class="legend">
 
-    <div *ngIf="foundOne == false">
+    <div *ngIf="loading">
+      <span>Loading...</span>
+    </div>
+
+    <div *ngIf="!loading && !foundOne">
       <span>No results found</span>
     </div>
 
-    <div *ngIf="foundOne == true">
+    <div *ngIf="!loading && foundOne">
       <span>
         The closest Earthquake to {{ city }} was a {{ data!.title }} on {{ asOf | date }}
       </span>

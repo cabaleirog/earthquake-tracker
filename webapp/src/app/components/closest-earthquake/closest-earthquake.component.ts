@@ -28,19 +28,24 @@ export class ClosestEarthquakeComponent implements OnInit {
 
   public magnitude: number = 0;
 
+  public loading: boolean = true;
+
   constructor(private earthquakeService: EarthquakesService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.earthquakeService.getClosest(this.cityIdentifier, this.sinceDate, this.untilDate)
       .subscribe(
         (resp) => {
           console.log(resp);
-          if (resp['data']) {
+          if (resp && resp['data']) {
             this.data = resp['data'];
           }
+          this.loading = false;
         },
         (err) => {
           console.error(err);
+          this.loading = false;
         }
       )
   }

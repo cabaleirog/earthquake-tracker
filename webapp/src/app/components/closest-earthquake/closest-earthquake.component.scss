@@ -35,6 +35,10 @@
   &--red {
     background: #AA1C1C;
   }
+
+  &--gray {
+    background: rgba(0, 0, 0, 0.2);
+  }
 }
 
 .circle__content {
