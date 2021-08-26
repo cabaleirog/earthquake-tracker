@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from functools import cache
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -76,7 +75,6 @@ def get_closest_earthquake(request):
     })
 
 
-@cache
 def _get_closest_earthquake(latitude, longitude, start_time, end_time):
     if isinstance(start_time, str):
         start_time = datetime.strptime(start_time, '%Y-%m-%d')
