@@ -12,4 +12,4 @@ echo "Running migrations..."
 python manage.py migrate
 
 echo "Initializing Gunicorn..."
-gunicorn -b 0.0.0.0:8000 -w 5 djangoapi.wsgi
+gunicorn -b 0.0.0.0:8000 -w 5 -t 600 djangoapi.wsgi
