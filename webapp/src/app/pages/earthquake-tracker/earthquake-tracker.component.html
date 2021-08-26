@@ -32,8 +32,8 @@
   </form>
 
   <div class="indicators" *ngIf="!loading">
-    <app-closest-earthquake city-identifier="los_angeles" city="Los Angeles, CA" [since]="searchSince" [until]="searchUntil"></app-closest-earthquake>
-    <app-closest-earthquake city-identifier="san_francisco" city="San Francisco, CA" [since]="searchSince" [until]="searchUntil"></app-closest-earthquake>
-    <app-closest-earthquake city-identifier="tokyo" city="Tokyo, Japon" [since]="searchSince" [until]="searchUntil"></app-closest-earthquake>
+    <div *ngFor="let location of locations">
+      <app-closest-earthquake [city-identifier]="location.identifier" [city]="location.name" [since]="searchSince" [until]="searchUntil"></app-closest-earthquake>
+    </div>
   </div>
 </div>

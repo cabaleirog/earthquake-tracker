@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { LocationsService, Location } from 'src/app/services/locations.service';
 
 @Component({
   selector: 'app-earthquake-tracker',
@@ -21,13 +22,19 @@ export class EarthquakeTrackerComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date = new Date();
 
-  constructor() {
+  locations: Location[] = [];
+
+  constructor(private locationsService: LocationsService) {
     const todayISO = (new Date()).toISOString().substr(0, 10);
     this.searchSince = todayISO;
     this.searchUntil = todayISO;
   }
 
   ngOnInit(): void {
+    this.locationsService.geLocations()
+      .subscribe((resp) => {
+        this.locations = resp.data;
+      });
   }
 
   updateData(): void {
