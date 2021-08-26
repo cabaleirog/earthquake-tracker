@@ -10,14 +10,14 @@ services:
     volumes:
       - ./webapp/src:/code/src
 
-  locations-api:
+  api:
     build:
-      context: locations-api-service/.
+      context: api-service/.
       dockerfile: Dockerfile
     ports:
       - 5001:8000
     volumes:
-      - ./locations-api-service/djangoapi:/code
+      - ./api-service/djangoapi:/code
     depends_on:
       - db
 
@@ -32,7 +32,7 @@ services:
       - 80:80
     depends_on:
       - webapp
-      - locations-api
+      - api
 
   db:
     image: mysql
