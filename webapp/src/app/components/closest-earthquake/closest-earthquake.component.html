@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="city">
+    <span>{{ city }}</span>
+  </div>
+  
+  <div class="circle" [ngClass]="{'circle--red': foundOne == true, 'circle--gray': loading == true}">
+    <div class="circle__content">
+
+      <div *ngIf="!foundOne">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 10H10C7.25 10 5 12.25 5 15V22.5H10V15H50V22.5H55V15C55 12.25 52.75 10 50 10ZM50 45H10V37.5H5V45C5 47.75 7.25 50 10 50H50C52.75 50 55 47.75 55 45V37.5H50V45Z" fill="white"/>
+          <path d="M37.225 18.875C36.375 17.175 33.6 17.175 32.75 18.875L25 34.4L22.225 28.875C22.02 28.4605 21.7028 28.1119 21.3094 27.8688C20.9161 27.6257 20.4624 27.4979 20 27.5H5V32.5H18.45L22.75 41.125C23.2 41.975 24.05 42.5 25 42.5C25.95 42.5 26.8 41.975 27.225 41.125L35 25.6L37.775 31.125C38.2 31.975 39.05 32.5 40 32.5H55V27.5H41.55L37.225 18.875Z" fill="white"/>
+        </svg>      
+      </div>
+
+      <div *ngIf="foundOne">
+        <span>{{ data!.magnitude | number:'1.1-1' }}</span>
+      </div>
+
+    </div>
+  </div>
+  
+  <div class="legend">
+
+    <div *ngIf="loading">
+      <span>Loading...</span>
+    </div>
+
+    <div *ngIf="!loading && !foundOne">
+      <span>No results found</span>
+    </div>
+
+    <div *ngIf="!loading && foundOne">
+      <span>
+        The closest Earthquake to {{ city }} was a {{ data!.title }} on {{ asOf | date }}
+      </span>
+    </div>
+  
+  </div>
+  
+</div>

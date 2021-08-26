@@ -1,0 +1,67 @@
+.container {
+  background: #3F5F63;
+  width: 100%;
+  min-height: 100vh;
+}
+
+h1 {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 63px;
+  color: #FFFFFF;
+  text-align: center;
+  padding-top: 48px;
+}
+
+h2 {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.indicators {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 120px;
+  padding: 0 5vw;
+}
+
+.date-pickers-container {
+  border: 1px dashed #FFFFFF;
+  box-sizing: border-box;
+  margin: 100px 0;
+  padding: 40px 80px;
+  width: 720px;
+
+  &__pickers {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+
+    button {
+      background-color: #158290;
+
+      svg {
+        fill: white;
+        margin-right: 8px;
+      }
+    }
+  }
+
+}
+
+.flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

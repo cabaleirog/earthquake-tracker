@@ -1,0 +1,14 @@
+@use 'styles/reset';
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Override of the Angular Material theme
+.mat-form-field {
+  .mat-input-element {
+    color: white;
+  }
+}
