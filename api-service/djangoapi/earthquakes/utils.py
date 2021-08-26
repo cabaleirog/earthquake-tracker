@@ -30,6 +30,9 @@ def get_logger(name, level=logging.DEBUG):
     return logger
 
 
+logger = get_logger(__name__)
+
+
 def build_query_url(start_date, end_date, min_magnitude):
     """
 
@@ -60,6 +63,7 @@ def build_query_url(start_date, end_date, min_magnitude):
 
 def pull_usgs_data(start_date, end_date, min_magnitude=5.0):
     url = build_query_url(start_date, end_date, min_magnitude)
+    logger.debug(url)
     response = requests.get(url)
     data = json.loads(response.text)
     return data.get('features')
