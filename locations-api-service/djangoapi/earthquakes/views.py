@@ -3,6 +3,7 @@ from functools import cache
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from redis import Redis
 
 from locations.models import Location
 from earthquakes.models import Earthquake
@@ -12,6 +13,8 @@ from earthquakes.utils import get_logger, pull_usgs_data, check_missing_dates, c
 
 
 logger = get_logger(__name__)
+
+redis = Redis(host='redis', port=6379)
 
 
 @api_view(['GET'])
@@ -24,10 +27,22 @@ def get_closest_earthquake(request):
     location = Location.objects.get(identifier=location_identifier)
     logger.debug(location)
 
-    # TODO: Check if the result is on cache, and return if found
+    redis_key = 'closest:{0}:{1}:{2}'.format(
+        location_identifier,
+        starttime.toordinal(),
+        endtime.toordinal()
+    )
 
-    closest = _get_closest_earthquake(
-        location.latitude, location.longitude, starttime, endtime)
+    if redis.exists(redis_key):
+        event_id = redis.get(redis_key).decode('utf-8')
+        logger.debug('Using cache')
+        logger.debug(event_id)
+        closest = Earthquake.objects.filter(event_id=event_id).first()
+        logger.debug(closest)
+    else:
+        closest = _get_closest_earthquake(
+            location.latitude, location.longitude, starttime, endtime)
+        redis.set(redis_key, closest.event_id)
 
     if closest:
         return Response({

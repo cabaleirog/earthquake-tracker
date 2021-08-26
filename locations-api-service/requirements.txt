@@ -3,3 +3,4 @@ djangorestframework
 gunicorn
 mysqlclient
 requests
+redis
