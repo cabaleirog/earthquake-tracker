@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  webapp:
+    build:
+      context: webapp/.
+      dockerfile: Dockerfile.dev
+    ports:
+      - 4200:4200
+    volumes:
+      - ./webapp/src:/code/src
+
+  api:
+    build:
+      context: api-service/.
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./api-service/djangoapi:/code
+  
+  nginx:
+    build:
+      context: nginx/.
+      dockerfile: Dockerfile

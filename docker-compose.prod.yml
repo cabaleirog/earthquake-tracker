@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  webapp:
+    build:
+      context: webapp/.
+      dockerfile: Dockerfile
+    environment:
+      PRODUCTION: 'true'
+
+  api:
+    build:
+      context: api-service/.
+      dockerfile: Dockerfile
+
+  nginx:
+    build:
+      context: nginx/.
+      dockerfile: Dockerfile
