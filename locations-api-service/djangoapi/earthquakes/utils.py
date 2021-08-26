@@ -6,6 +6,8 @@ from math import radians, cos, sin, asin, sqrt
 
 import requests
 
+from earthquakes.models import Earthquake
+
 
 def get_logger(name, level=logging.DEBUG):
     logger = logging.getLogger(name)
@@ -77,13 +79,17 @@ def check_missing_dates(start_date, end_date):
         List[datetime]
 
     """
-    # TODO: Implement this, for now, everything is missing
-    ans = []
-    current_date = start_date
-    while current_date <= end_date:
-        ans.append(current_date)
-        current_date = current_date + timedelta(days=1)
-    return ans
+    # TODO: This implementation could use some improvement.
+    # A better implementation could include Redis instead of checking the DB.
+
+    objs = Earthquake.objects.all().filter(time__range=(start_date, end_date +
+                                                        timedelta(days=1)))
+    seen = {x.time.date() for x in objs}
+    all_dates = {
+        (start_date + timedelta(days=i)).date()
+        for i in range((end_date - start_date).days + 1)
+    }
+    return list(all_dates.difference(seen))
 
 
 def create_capture_ranges(dates, max_gap=30):
