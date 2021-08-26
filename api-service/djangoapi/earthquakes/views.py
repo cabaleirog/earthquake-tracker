@@ -37,12 +37,16 @@ def get_closest_earthquake(request):
         event_id = redis.get(redis_key).decode('utf-8')
         logger.debug('Using cache')
         logger.debug(event_id)
-        closest = Earthquake.objects.filter(event_id=event_id).first()
+
+        closest = None
+        if event_id:
+            closest = Earthquake.objects.filter(event_id=event_id).first()
+
         logger.debug(closest)
     else:
         closest = _get_closest_earthquake(
             location.latitude, location.longitude, starttime, endtime)
-        redis.set(redis_key, closest.event_id)
+        redis.set(redis_key, closest.event_id if closest else '')
 
     if closest:
         return Response({
