@@ -46,7 +46,7 @@ export class EarthquakeTrackerComponent implements OnInit {
     this.searchUntil = (this.endDate).toISOString().substr(0, 10)
     setTimeout(() => {
       this.loading = false;
-    }, 100);
+    }, 1);
   }
 
   private dateWithDelta(date: Date, delta: number) {
