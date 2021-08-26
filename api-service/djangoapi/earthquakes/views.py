@@ -9,7 +9,15 @@ from locations.models import Location
 from earthquakes.models import Earthquake
 from earthquakes.serializers import EarthquakeSerializer
 
-from earthquakes.utils import get_logger, pull_usgs_data, check_missing_dates, create_capture_ranges, distance
+from earthquakes.utils import get_logger
+from earthquakes.utils import pull_usgs_data
+from earthquakes.utils import check_missing_dates
+from earthquakes.utils import create_capture_ranges
+from earthquakes.utils import distance
+
+
+KEY_EXPIRE_SAME_DAY_SECONDS = 2 * 60  # 2 minutes for same day queries
+KEY_EXPIRE_GLOBAL_SECONDS = 24 * 60 * 60   # 24 hours cache
 
 
 logger = get_logger(__name__)
@@ -46,7 +54,15 @@ def get_closest_earthquake(request):
     else:
         closest = _get_closest_earthquake(
             location.latitude, location.longitude, starttime, endtime)
-        redis.set(redis_key, closest.event_id if closest else '')
+
+        if starttime >= datetime.today() or endtime >= datetime.today():
+            logger.debug('Setting short cache policy')
+            key_exp = timedelta(seconds=KEY_EXPIRE_SAME_DAY_SECONDS)
+        else:
+            logger.debug('Setting standard cache policy')
+            key_exp = timedelta(seconds=KEY_EXPIRE_GLOBAL_SECONDS)
+
+        redis.set(redis_key, closest.event_id if closest else '', key_exp)
 
     if closest:
         return Response({
@@ -91,7 +107,8 @@ def _get_closest_earthquake(latitude, longitude, start_time, end_time):
         d = distance(
             latitude, earthquake.latitude, longitude, earthquake.longitude)
         distance_array.append((d, earthquake))
-        logger.debug('%.0f -> %s | %s %s', d, earthquake, earthquake.latitude, earthquake.longitude)
+        logger.debug('%.0f -> %s | %s %s', d, earthquake, earthquake.latitude,
+                     earthquake.longitude)
 
     if not distance_array:
         # There were no earthquakes meeting the contrains for the period.
