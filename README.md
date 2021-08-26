@@ -68,3 +68,22 @@ curl --location --request POST 'http://127.0.0.1:80/locations/add' \
 
 Now that everything is set up, go to the application, which in a local machine will be at the standard [localhost](http://127.0.0.1:80), and 3 locations should be visible.
 
+## Useful commands
+
+Start development server, forcing a rebuild:
+
+```sh
+sudo docker-compose up --build
+```
+
+Start production server using Docker Compose, forcing a rebuild.
+
+```sh
+sudo docker-compose -y docker-compose.yml -f docker-compose.prod.yml up --build
+```
+
+Remove the application:
+
+```sh
+sudo docker-compose down
+```
