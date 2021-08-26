@@ -26,7 +26,7 @@ redis = Redis(host='redis', port=6379)
 
 @api_view(['GET'])
 def get_closest_earthquake(request):
-    """..."""
+    """Return the closest earthquake to a location between two dates."""
     location_identifier = request.GET.get('location')
     starttime = datetime.strptime(request.GET.get('starttime'), '%Y-%m-%d')
     endtime = datetime.strptime(request.GET.get('endtime'), '%Y-%m-%d')

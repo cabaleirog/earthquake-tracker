@@ -34,7 +34,7 @@ logger = get_logger(__name__)
 
 
 def build_query_url(start_date, end_date, min_magnitude):
-    """
+    """Return a valid URL to pull earthquake data.
 
     https://earthquake.usgs.gov/fdsnws/event/1/#parameters
 
@@ -46,9 +46,9 @@ def build_query_url(start_date, end_date, min_magnitude):
     2021-08-26T00:20:44+00:00, Explicit timezone.
 
     Args:
-        start_date (datetime):
-        end_date (datetime):
-        min_magnitude (float):
+        start_date (datetime): The start of the period.
+        end_date (datetime): The end of the period.
+        min_magnitude (float): The minimim magnitude to fetch.
 
     Returns:
         str: The url with the relevant query parameters.
@@ -62,6 +62,17 @@ def build_query_url(start_date, end_date, min_magnitude):
 
 
 def pull_usgs_data(start_date, end_date, min_magnitude=5.0):
+    """Retrieve data from the USGS for a given period.
+
+    Args:
+        start_date (datetime): The start of the period.
+        end_date (datetime): The end of the period.
+        min_magnitude (Optional[float]): The minimim magnitude to fetch.
+
+    Returns:
+        List: All earthquakes for the period with minimum magnitude.
+
+    """
     url = build_query_url(start_date, end_date, min_magnitude)
     logger.debug(url)
     response = requests.get(url)
@@ -71,16 +82,14 @@ def pull_usgs_data(start_date, end_date, min_magnitude=5.0):
 
 @cache
 def check_missing_dates(start_date, end_date):
-    """
+    """Return the dates which are not currently stored in our database.
 
     Args:
-        start_date (datetime):
-        end_date (datetime):
-
-
+        start_date (datetime): The initial date.
+        end_date (datetime): The final date.
 
     Returns:
-        List[datetime]
+        List[datetime]: All missing dates for the period.
 
     """
     # TODO: This implementation could use some improvement.
@@ -103,8 +112,8 @@ def create_capture_ranges(dates, max_gap=360):
        within the `max_gap` number of days.
 
        Args:
-           dates: (List[datetime])
-           max_gap (int): Max number of days in any range
+           dates: (List[datetime]): Dates to group.
+           max_gap (int): Max number of days in any range.
     """
     dates = sorted(dates)
     groups = []
