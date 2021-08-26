@@ -107,8 +107,6 @@ def _get_closest_earthquake(latitude, longitude, start_time, end_time):
         d = distance(
             latitude, earthquake.latitude, longitude, earthquake.longitude)
         distance_array.append((d, earthquake))
-        logger.debug('%.0f -> %s | %s %s', d, earthquake, earthquake.latitude,
-                     earthquake.longitude)
 
     if not distance_array:
         # There were no earthquakes meeting the contrains for the period.
